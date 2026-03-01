@@ -34,3 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# wiki data (large, rebuild locally)
+wiki-data.json
+
+# debug scripts
+debug.js
