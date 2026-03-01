@@ -18,8 +18,6 @@ export default function Home() {
   const [keywords, setKeywords] = useState<string[]>([]);
   const [data, setData] = useState<SearchData | null>(null);
   const [loading, setLoading] = useState(false);
-  const [building, setBuilding] = useState(false);
-  const [buildInfo, setBuildInfo] = useState("");
   const [error, setError] = useState("");
   const [activeFilters, setActiveFilters] = useState<Set<string>>(new Set());
   const [filterMode, setFilterMode] = useState<"all" | "picking">("all");
@@ -72,16 +70,6 @@ export default function Home() {
     }
   }
 
-  async function doBuild() {
-    setBuilding(true); setBuildInfo("正在抓取 Wiki 数据...");
-    try {
-      const r = await fetch("/api/build", { method: "POST" });
-      const d = await r.json();
-      setBuildInfo(d.ok ? `✅ ${d.total} 条（${(d.durationMs / 1000).toFixed(1)}s）` : "❌ 失败");
-    } catch { setBuildInfo("❌ 失败"); }
-    finally { setBuilding(false); }
-  }
-
   function toggleFilter(cat: string) {
     if (filterMode === "all") {
       setActiveFilters(new Set([cat])); setFilterMode("picking");
@@ -108,16 +96,8 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-[#0c1018] text-gray-200">
       <header className="bg-[#141a24] border-b border-[#222c3a]">
-        <div className="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-5 py-4">
           <h1 className="text-lg font-bold text-orange-400">🔥 火炬之光：无限 Wiki 搜索</h1>
-          <div className="flex items-center gap-3">
-            {buildInfo && <span className="text-xs text-gray-400">{buildInfo}</span>}
-            <button onClick={doBuild} disabled={building}
-              className="px-3 py-1.5 bg-[#1c2433] hover:bg-[#253040] disabled:opacity-50
-                         border border-[#2a3545] rounded-lg text-xs text-gray-300">
-              {building ? "构建中..." : "🔄 构建数据"}
-            </button>
-          </div>
         </div>
       </header>
 

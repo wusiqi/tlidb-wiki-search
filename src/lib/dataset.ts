@@ -1,92 +1,36 @@
-// Dataset: fetch entire wiki and store as structured data
-// Triggered manually, results cached in memory + JSON file
+// Dataset: load pre-built wiki data from public/wiki-data.json
+// Data is built at deploy time via scripts/build-data.ts
 
 import { WikiEntry } from "./types";
-import {
-  parseMechanics, parseCraft, parseSkills, parseTalent,
-  parseLegendary, parseDestiny, parsePactspirit, parsePrism, parseHero,
-} from "./parsers";
-import { writeFile, readFile } from "fs/promises";
-import { existsSync } from "fs";
+import { readFileSync, existsSync } from "fs";
+import { join } from "path";
 
-const DATA_PATH = "wiki-data.json";
-
-// In-memory cache
 let cache: WikiEntry[] | null = null;
-let lastBuild: string | null = null;
 
-export interface BuildStatus {
-  ok: boolean;
-  total: number;
-  categories: Record<string, number>;
-  buildTime: string;
-  durationMs: number;
-}
-
-// Build dataset: fetch all wiki pages, parse, save
-export async function buildDataset(): Promise<BuildStatus> {
-  const start = Date.now();
-
-  const results = await Promise.allSettled([
-    parseMechanics(),
-    parseSkills(),
-    parseTalent(),
-    parseLegendary(),
-    parseDestiny(),
-    parsePactspirit(),
-    parsePrism(),
-    parseHero(),
-    parseCraft(),
-  ]);
-
-  const all: WikiEntry[] = [];
-  for (const r of results) {
-    if (r.status === "fulfilled") all.push(...r.value);
-  }
-
-  // Save to file
-  const buildTime = new Date().toISOString();
-  await writeFile(DATA_PATH, JSON.stringify({ buildTime, entries: all }, null, 0));
-
-  // Update cache
-  cache = all;
-  lastBuild = buildTime;
-
-  // Stats
-  const categories: Record<string, number> = {};
-  for (const e of all) {
-    categories[e.category] = (categories[e.category] || 0) + 1;
-  }
-
-  return {
-    ok: true,
-    total: all.length,
-    categories,
-    buildTime,
-    durationMs: Date.now() - start,
-  };
-}
-
-// Get dataset: from cache, or load from file
 export async function getDataset(): Promise<WikiEntry[]> {
   if (cache) return cache;
 
-  // Try loading from file
-  if (existsSync(DATA_PATH)) {
+  // Try loading from public directory (built at deploy time)
+  const publicPath = join(process.cwd(), "public/wiki-data.json");
+  if (existsSync(publicPath)) {
     try {
-      const raw = await readFile(DATA_PATH, "utf-8");
+      const raw = readFileSync(publicPath, "utf-8");
       const data = JSON.parse(raw);
       cache = data.entries || [];
-      lastBuild = data.buildTime || null;
       return cache!;
-    } catch {
-      // File corrupted, return empty
-    }
+    } catch { /* fall through */ }
+  }
+
+  // Fallback: try root directory (local dev with manual build)
+  const rootPath = join(process.cwd(), "wiki-data.json");
+  if (existsSync(rootPath)) {
+    try {
+      const raw = readFileSync(rootPath, "utf-8");
+      const data = JSON.parse(raw);
+      cache = data.entries || [];
+      return cache!;
+    } catch { /* fall through */ }
   }
 
   return [];
-}
-
-export function getLastBuild(): string | null {
-  return lastBuild;
 }
