@@ -1,7 +1,7 @@
 // Build script: fetch wiki data during next build
 // Run via: npx tsx scripts/build-data.ts
 
-import { writeFileSync } from "fs";
+import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 
 // Import parsers directly (can't use path aliases in standalone script)
@@ -31,6 +31,7 @@ async function main() {
   }
 
   const outPath = join(__dirname, "../public/wiki-data.json");
+  mkdirSync(join(__dirname, "../public"), { recursive: true });
   const data = { buildTime: new Date().toISOString(), entries };
   writeFileSync(outPath, JSON.stringify(data));
 
