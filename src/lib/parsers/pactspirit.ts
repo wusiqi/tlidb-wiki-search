@@ -5,7 +5,7 @@
 //            <div class="border-top"><div class="modifier">效果</div>...</div>
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 export async function parsePactspirit(): Promise<WikiEntry[]> {
   const html = await fetchHtml("Pactspirit");

@@ -2,7 +2,7 @@
 // Structure: <tr><td>词缀效果</td><td>来源</td><td>类型</td></tr>
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 export async function parseCraft(): Promise<WikiEntry[]> {
   const html = await fetchHtml("Craft");

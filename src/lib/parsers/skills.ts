@@ -5,7 +5,7 @@
 // We use the detail view for full descriptions.
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 const SKILL_PAGES: { slug: string; subtype: string }[] = [
   { slug: "Active_Skill", subtype: "主动技能" },

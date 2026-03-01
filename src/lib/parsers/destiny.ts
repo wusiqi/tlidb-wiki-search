@@ -2,7 +2,7 @@
 // Structure: <a data-hover href="xxx">天命名</a><div><div><span data-modifier-id>效果</span></div></div>
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 export async function parseDestiny(): Promise<WikiEntry[]> {
   const html = await fetchHtml("Destiny");

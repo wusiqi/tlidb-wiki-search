@@ -3,7 +3,7 @@
 //            followed by <div class="tierParent"> with tier divs
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 export async function parseLegendary(): Promise<WikiEntry[]> {
   const html = await fetchHtml("Legendary_Gear");

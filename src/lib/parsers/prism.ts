@@ -3,7 +3,7 @@
 // The flex containers are too complex (mix of prism effects, random affixes, talent bonuses).
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 export async function parsePrism(): Promise<WikiEntry[]> {
   const html = await fetchHtml("Ethereal_Prism");

@@ -2,15 +2,10 @@
 // Triggered manually, results cached in memory + JSON file
 
 import { WikiEntry } from "./types";
-import { parseMechanics } from "./parsers/mechanics";
-import { parseCraft } from "./parsers/craft";
-import { parseSkills } from "./parsers/skills";
-import { parseTalent } from "./parsers/talent";
-import { parseLegendary } from "./parsers/legendary";
-import { parseDestiny } from "./parsers/destiny";
-import { parsePactspirit } from "./parsers/pactspirit";
-import { parsePrism } from "./parsers/prism";
-import { parseHero } from "./parsers/hero";
+import {
+  parseMechanics, parseCraft, parseSkills, parseTalent,
+  parseLegendary, parseDestiny, parsePactspirit, parsePrism, parseHero,
+} from "./parsers";
 import { writeFile, readFile } from "fs/promises";
 import { existsSync } from "fs";
 

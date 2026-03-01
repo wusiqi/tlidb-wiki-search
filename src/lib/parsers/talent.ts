@@ -3,7 +3,7 @@
 // Small/medium: <span>小型天赋</span><span><a>知识之神</a></span> + effects
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 export async function parseTalent(): Promise<WikiEntry[]> {
   const html = await fetchHtml("Talent");

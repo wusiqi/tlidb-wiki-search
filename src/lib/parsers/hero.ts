@@ -3,7 +3,7 @@
 // Step 2: Fetch each trait page, extract trait skills with fw-bold names
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 export async function parseHero(): Promise<WikiEntry[]> {
   const html = await fetchHtml("Hero");

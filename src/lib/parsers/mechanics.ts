@@ -2,7 +2,7 @@
 // Structure: <tr><td><a href="xxx">词条名</a></td><td>描述</td></tr>
 
 import { WikiEntry } from "../types";
-import { stripTags, fetchHtml, BASE } from "../html";
+import { stripTags, fetchHtml, BASE } from "../utils/html";
 
 export async function parseMechanics(): Promise<WikiEntry[]> {
   const html = await fetchHtml("Hyperlink");
