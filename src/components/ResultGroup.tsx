@@ -33,6 +33,7 @@ function EntryList({ entries, q }: { entries: WikiEntry[]; q: string }) {
           <div className="flex items-center gap-2 mb-1.5">
             {e.name && <span className="text-sm font-semibold text-blue-300">{e.name}</span>}
             {e.subtype && <span className="text-[11px] text-gray-500 bg-[#1c2433] px-2 py-0.5 rounded">{e.subtype}</span>}
+            {e.source && <span className="text-[11px] text-gray-400 bg-[#1c2433] px-2 py-0.5 rounded">{e.source}</span>}
             {e.tags && e.tags.length > 0 && (
               <div className="flex gap-1 ml-auto">
                 {e.tags.map((t, j) => (
