@@ -16,7 +16,7 @@ function cleanup(entries: WikiEntry[]): WikiEntry[] {
   const seen = new Set<string>();
   const deduped: WikiEntry[] = [];
   for (const e of entries) {
-    const key = `${e.category}:${e.name}:${e.description}`;
+    const key = `${e.category}:${e.name}:${e.source || ""}:${e.description}`;
     if (seen.has(key)) continue;
     seen.add(key);
     deduped.push(e);
@@ -26,7 +26,7 @@ function cleanup(entries: WikiEntry[]): WikiEntry[] {
   for (const e of deduped) {
     if (e.name && e.category !== "打造" && e.category !== "棱镜") {
       const existing = merged.find(
-        m => m.category === e.category && m.name === e.name
+        m => m.category === e.category && m.name === e.name && m.subtype === e.subtype
       );
       if (existing) {
         existing.description += " ｜ " + e.description;
