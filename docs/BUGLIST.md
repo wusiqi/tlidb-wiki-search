@@ -1,16 +1,33 @@
-# v2 Bug List
+# Bug List & 已知问题
 
-## Critical
-- [ ] 棱镜 parser：把所有词缀合并成一条巨大 entry，需要重写。每个棱镜应该是独立 entry，词缀表格单独处理
-- [ ] 传奇装备 description 截断：数值被截成 `+(250–350)` 丢失后面的文字（如"该装备护盾"）
-- [ ] 技能 description 重复：同一技能的效果文本出现两遍
+## 已修复
 
-## Medium
-- [ ] 天赋 description 里名字重复：name 和 subtype 已经有了，description 里不应该再包含
-- [ ] 技能 parser 没有提取完整效果描述，只拿到了标签和部分文本
+- [x] 游戏机制 parser — 表格行提取正常
+- [x] 打造 parser — 三列表格提取正常
+- [x] 命运 parser — content div 提取正常
+- [x] 契灵 parser — modifier div 提取正常
+- [x] 技能 parser — 7 个子页面详情视图提取
+- [x] 天赋 parser — 核心/小型/中型天赋分类提取
+- [x] 传奇装备 parser — 装备类型自动识别
+- [x] 英雄 parser — 25 个详情页并行 fetch
+- [x] 前端统一格式
+- [x] 多关键词搜索
+- [x] 分类过滤 sidebar（首次单选，之后多选）
+- [x] TagPanel 常用标签面板
+- [x] 响应式布局（桌面/平板/手机）
+- [x] 构建时数据生成（build-data.ts）
+- [x] 传奇装备类型标签
+- [x] 多行词缀展示（按分隔符分行）
+- [x] 英雄特性嵌套展示
 
-## Done
-- [x] 游戏机制 parser ✅
-- [x] 打造 parser ✅
-- [x] 天命 parser ✅
-- [x] 前端统一格式 ✅
+## 已知问题
+
+### Parser 相关
+- [ ] 部分技能描述可能包含相邻技能的内容（parser 边界问题）
+- [ ] 传奇装备 tierParent div 正则可能遗漏部分嵌套内容
+- [ ] 棱镜 parser 跳过超长表格行，可能排除部分有效条目
+- [ ] 部分命运描述可能包含模板文本
+- [ ] 英雄详情页 HTML 结构不统一，部分英雄特性可能提取不完整
+
+### 前端相关
+- [ ] 棱镜搜索结果内容较长时排版不够紧凑
